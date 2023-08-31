@@ -1,0 +1,47 @@
+MODELO E EXEMPLO DE BD EM SQL E SUA CONSULTAS.
+
+-- Criar um banco de dados
+CREATE DATABASE ExemploDB;
+USE ExemploDB;
+
+-- Criar tabela
+CREATE TABLE Clientes (
+    ID INT PRIMARY KEY,
+    Nome VARCHAR(50),
+    Idade INT,
+    Email VARCHAR(100)
+);
+
+-- Inserir dados
+INSERT INTO Clientes (ID, Nome, Idade, Email)
+VALUES
+    (1, 'João', 25, 'joao@example.com'),
+    (2, 'Maria', 30, 'maria@example.com'),
+    (3, 'Pedro', 22, 'pedro@example.com');
+
+-- Criar visão
+CREATE VIEW ClientesComMaisDe30 AS
+SELECT * FROM Clientes WHERE Idade > 30;
+
+-- Criar índice
+CREATE INDEX idx_Nome ON Clientes(Nome);
+
+-- Consultas e Joins
+-- Consulta 1: Selecionar clientes com mais de 25 anos
+SELECT * FROM Clientes WHERE Idade > 25;
+
+-- Consulta 2: Selecionar clientes e seus pedidos
+SELECT c.Nome, p.Produto
+FROM Clientes c
+JOIN Pedidos p ON c.ID = p.ClienteID;
+
+-- Teste de eficiência
+-- Vamos medir o tempo de execução de uma consulta
+DECLARE @StartTime DATETIME, @EndTime DATETIME;
+SET @StartTime = GETDATE();
+
+-- Consulta de exemplo
+SELECT COUNT(*) FROM Clientes;
+
+SET @EndTime = GETDATE();
+SELECT DATEDIFF(ms, @StartTime, @EndTime) AS TempoDeExecucao;
